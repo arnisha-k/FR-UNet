@@ -24,7 +24,7 @@ Install packages from requirements.txt
 pip install -r requirements.txt
 ```
 
-Process the data
+Process the data. Datasets are available at: https://drive.google.com/drive/folders/1P8-4lRQhvpoNvey246AqXWRyUrBJSiwj?usp=sharing
 data_process.py file
  
 ```
