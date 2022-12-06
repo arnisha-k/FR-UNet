@@ -43,9 +43,9 @@ Type this in terminal to run the test.py file
 ```
 python test.py -dp DATASET_PATH -wp WEIGHT_FILE_PATH
 ```
-The weights are in the trained-weights folder
+The weights are at https://drive.google.com/drive/folders/1RYMdgc_ubwZ69hsPktScxmPDJ94KeDP0?usp=share_link
 ```
-python test.py -dp DATASET_PATH -wp trained-weights/DATASET_NAME
+python test.py -dp DATASET_PATH -wp <path to the weight>
 ```
 
 
