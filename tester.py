@@ -14,7 +14,7 @@ import ttach as tta
 
 
 class Tester(Trainer):
-    def __init__(self, model, loss, CFG, checkpoint, test_loader, dataset_path, show=False):
+    def __init__(self, model, loss, CFG, checkpoint, test_loader, dataset_path, show=True):
         # super(Trainer, self).__init__()
         self.loss = loss
         self.CFG = CFG
@@ -52,6 +52,8 @@ class Tester(Trainer):
                     H, W = 960, 999
                 elif self.dataset_path.endswith("DCA1"):
                     H, W = 300, 300
+                elif self.dataset_path.endswith("ORVS"):
+                    H, W = 584, 565    
 
                 if not self.dataset_path.endswith("CHUAC"):
                     img = TF.crop(img, 0, 0, H, W)
@@ -86,7 +88,7 @@ class Tester(Trainer):
                         self.CCC.update(count_connect_component(
                             pre, gt, threshold=self.CFG.threshold))
                 tbar.set_description(
-                    'TEST ({}) | Loss: {:.4f} | AUC {:.4f} F1 {:.4f} Acc {:.4f}  Sen {:.4f} Spe {:.4f} Pre {:.4f} IOU {:.4f} |B {:.2f} D {:.2f} |'.format(
+                    'TEST ({}) | Loss: {:.4f} | F1 {:.4f} Acc {:.4f}  Sen {:.4f} Spe {:.4f} Pre {:.4f} IOU {:.4f} |B {:.2f} D {:.2f} |'.format(
                         i, self.total_loss.average, *self._metrics_ave().values(), self.batch_time.average, self.data_time.average))
                 tic = time.time()
         logger.info(f"###### TEST EVALUATION ######")

@@ -33,6 +33,10 @@ def data_process(data_path, name, patch_size, stride, mode):
         img_path = os.path.join(data_path, "Original")
         gt_path = os.path.join(data_path, "Photoshop")
         file_list = list(sorted(os.listdir(img_path)))
+    elif name == "ORVS":
+        img_path = os.path.join(data_path, mode, "images")
+        gt_path = os.path.join(data_path, mode, "1st_manual")
+        file_list = list(sorted(os.listdir(img_path)))
     img_list = []
     gt_list = []
     for i, file in enumerate(file_list):
@@ -111,6 +115,12 @@ def data_process(data_path, name, patch_size, stride, mode):
                 img = Grayscale(1)(img)
                 img_list.append(ToTensor()(img))
                 gt_list.append(ToTensor()(gt))
+        elif name == "ORVS":
+                img = Image.open(os.path.join(img_path, file))
+                gt = Image.open(os.path.join(gt_path, file[0:4] + "_manual1.gif"))
+                img = Grayscale(1)(img)
+                img_list.append(ToTensor()(img))
+                gt_list.append(ToTensor()(gt))
     img_list = normalization(img_list)
     if mode == "training":
         img_patch = get_patch(img_list, patch_size, stride)
@@ -129,6 +139,8 @@ def get_square(img_list, name):
     img_s = []
     if name == "DRIVE":
         shape = 592
+    elif name == "ORVS": 
+        shape = 592    
     elif name == "CHASEDB1":
         shape = 1008
     elif name == "DCA1":
@@ -189,7 +201,7 @@ if __name__ == '__main__':
     parser.add_argument('-dp', '--dataset_path', default="datasets/DRIVE", type=str,
                         help='the path of dataset',required=True)
     parser.add_argument('-dn', '--dataset_name', default="DRIVE", type=str,
-                        help='the name of dataset',choices=['DRIVE','CHASEDB1','STARE','CHUAC','DCA1'],required=True)
+                        help='the name of dataset',choices=['DRIVE','CHASEDB1','STARE','CHUAC','DCA1','ORVS'],required=True)
     parser.add_argument('-ps', '--patch_size', default=48,
                         help='the size of patch for image partition')
     parser.add_argument('-s', '--stride', default=6,

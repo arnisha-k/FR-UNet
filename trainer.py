@@ -75,7 +75,7 @@ class Trainer:
             self._metrics_update(
                 *get_metrics(pre, gt, threshold=self.CFG.threshold).values())
             tbar.set_description(
-                'TRAIN ({}) | Loss: {:.4f} | AUC {:.4f} F1 {:.4f} Acc {:.4f}  Sen {:.4f} Spe {:.4f} Pre {:.4f} IOU {:.4f} |B {:.2f} D {:.2f} |'.format(
+                'TRAIN ({}) | Loss: {:.4f} |  F1 {:.4f} Acc {:.4f}  Sen {:.4f} Spe {:.4f} Pre {:.4f} IOU {:.4f} |B {:.2f} D {:.2f} |'.format(
                     epoch, self.total_loss.average, *self._metrics_ave().values(), self.batch_time.average, self.data_time.average))
             tic = time.time()
         self.writer.add_scalar(
@@ -108,7 +108,7 @@ class Trainer:
                 self._metrics_update(
                     *get_metrics(predict, gt, threshold=self.CFG.threshold).values())
                 tbar.set_description(
-                    'EVAL ({})  | Loss: {:.4f} | AUC {:.4f} F1 {:.4f} Acc {:.4f} Sen {:.4f} Spe {:.4f} Pre {:.4f} IOU {:.4f} |'.format(
+                    'EVAL ({})  | Loss: {:.4f} | F1 {:.4f} Acc {:.4f} Sen {:.4f} Spe {:.4f} Pre {:.4f} IOU {:.4f} |'.format(
                         epoch, self.total_loss.average, *self._metrics_ave().values()))
                 self.writer.add_scalar(
                     f'{wrt_mode}/loss', self.total_loss.average, epoch)
@@ -141,7 +141,7 @@ class Trainer:
         self.batch_time = AverageMeter()
         self.data_time = AverageMeter()
         self.total_loss = AverageMeter()
-        self.auc = AverageMeter()
+        #self.auc = AverageMeter()
         self.f1 = AverageMeter()
         self.acc = AverageMeter()
         self.sen = AverageMeter()
@@ -149,8 +149,8 @@ class Trainer:
         self.pre = AverageMeter()
         self.iou = AverageMeter()
         self.CCC = AverageMeter()
-    def _metrics_update(self, auc, f1, acc, sen, spe, pre, iou):
-        self.auc.update(auc)
+    def _metrics_update(self, f1, acc, sen, spe, pre, iou):
+        #self.auc.update(auc)
         self.f1.update(f1)
         self.acc.update(acc)
         self.sen.update(sen)
@@ -161,7 +161,7 @@ class Trainer:
     def _metrics_ave(self):
 
         return {
-            "AUC": self.auc.average,
+            #"AUC": self.auc.average,
             "F1": self.f1.average,
             "Acc": self.acc.average,
             "Sen": self.sen.average,
