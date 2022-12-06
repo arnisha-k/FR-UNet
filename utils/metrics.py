@@ -54,7 +54,7 @@ def get_metrics(predict, target, threshold=None, predict_b=None):
     tn = ((1 - predict_b) * (1 - target)).sum()
     fp = ((1 - target) * predict_b).sum()
     fn = ((1 - predict_b) * target).sum()
-    auc = roc_auc_score(target, predict)
+    #auc = roc_auc_score(target, predict)
     acc = (tp + tn) / (tp + fp + fn + tn)
     pre = tp / (tp + fp)
     sen = tp / (tp + fn)
@@ -62,7 +62,7 @@ def get_metrics(predict, target, threshold=None, predict_b=None):
     iou = tp / (tp + fp + fn)
     f1 = 2 * pre * sen / (pre + sen)
     return {
-        "AUC": np.round(auc, 4),
+        #"AUC": np.round(auc, 4),
         "F1": np.round(f1, 4),
         "Acc": np.round(acc, 4),
         "Sen": np.round(sen, 4),
